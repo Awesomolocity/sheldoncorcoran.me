@@ -3,12 +3,14 @@
     <head>
         <title>{{ $title ?? config('app.name') }}</title>
         @include('partials.head')
+        <x-turnstile.scripts />
     </head>
     <body class="neobrutalist min-h-screen">
         <x-header />
-        <flux:main class="flex flex-col justify-center">
-            <x-personal-info size="xl" variant="ghost" />
-        </flux:main>
+        {{ $slot }}
+        <flux:footer>
+            <x-personal-info />
+        </flux:footer>
         @fluxScripts
     </body>
 </html>

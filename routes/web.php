@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\PostController;
+use App\Livewire\Contact\Page as ContactPage;
+use App\Livewire\Posts\Create\Page as CreatePost;
+use App\Livewire\Posts\Edit\Page as EditPost;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use Livewire\Volt\Volt;
@@ -7,6 +11,23 @@ use Livewire\Volt\Volt;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/contact', ContactPage::class)
+    ->name('contact');
+
+Route::get('/posts/create', CreatePost::class)
+    ->name('posts.create');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/posts/{post}/edit', EditPost::class)
+        ->name('posts.edit');
+
+    Route::resource('posts', PostController::class)
+        ->except(['index', 'show', 'create', 'edit']);
+});
+
+Route::resource('posts', PostController::class)
+    ->only(['index', 'show']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

@@ -1,38 +1,68 @@
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
+@plugin "@tailwindcss/typography";
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
+@font-face {
+    font-family: 'Work Sans';
+    src:url('../fonts/Work-Sans.ttf') format('truetype-variations');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@layer base {
+    button:not(:disabled), [role="button"]:not(:disabled) {
+        cursor: pointer;
+    }
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Work Sans', 'Inter', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-    --color-zinc-50: #fafafa;
-    --color-zinc-100: #f5f5f5;
-    --color-zinc-200: #e5e5e5;
-    --color-zinc-300: #d4d4d4;
-    --color-zinc-400: #a3a3a3;
-    --color-zinc-500: #737373;
-    --color-zinc-600: #525252;
-    --color-zinc-700: #404040;
-    --color-zinc-800: #262626;
-    --color-zinc-900: #171717;
-    --color-zinc-950: #0a0a0a;
-
-    --color-accent: var(--color-neutral-800);
-    --color-accent-content: var(--color-neutral-800);
+    --color-accent: var(--color-sky-600);
+    --color-accent-content: var(--color-sky-600);
     --color-accent-foreground: var(--color-white);
+
+    --color-neobrutal-primary-50: var(--color-sky-50);
+    --color-neobrutal-primary-100: var(--color-sky-100);
+    --color-neobrutal-primary-200: var(--color-sky-200);
+    --color-neobrutal-primary-300: var(--color-sky-300);
+    --color-neobrutal-primary-400: var(--color-sky-400);
+    --color-neobrutal-primary-500: var(--color-sky-500);
+    --color-neobrutal-primary-600: var(--color-sky-600);
+    --color-neobrutal-primary-700: var(--color-sky-700);
+    --color-neobrutal-primary-800: var(--color-sky-800);
+    --color-neobrutal-primary-900: var(--color-sky-900);
+    --color-neobrutal-primary-950: var(--color-sky-950);
+
+    --color-neobrutal-gray-50: var(--color-zinc-50);
+    --color-neobrutal-gray-100: var(--color-zinc-100);
+    --color-neobrutal-gray-200: var(--color-zinc-200);
+    --color-neobrutal-gray-300: var(--color-zinc-300);
+    --color-neobrutal-gray-400: var(--color-zinc-400);
+    --color-neobrutal-gray-500: var(--color-zinc-500);
+    --color-neobrutal-gray-600: var(--color-zinc-600);
+    --color-neobrutal-gray-700: var(--color-zinc-700);
+    --color-neobrutal-gray-800: var(--color-zinc-800);
+    --color-neobrutal-gray-900: var(--color-zinc-900);
+    --color-neobrutal-gray-950: var(--color-zinc-950);
+
+    --shadow-neobrutalist: 4px 4px 0 var(--color-neobrutal-gray-950);
+    --radius-neobrutalist: var(--radius);
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        --color-accent: var(--color-sky-600);
+        --color-accent-content: var(--color-sky-400);
+        --color-accent-foreground: var(--color-white);
     }
 }
 
@@ -47,18 +77,106 @@
     }
 }
 
+body.neobrutalist{
+    @apply
+    bg-neobrutal-primary-100
+    dark:bg-neobrutal-primary-950
+    text-neobrutal-gray-950
+    dark:text-neobrutal-gray-50;
+
+    [data-flux-navbar] {
+        @apply
+        border-2
+        border-neobrutal-gray-950
+        rounded-neobrutalist
+        shadow-neobrutalist
+        bg-neobrutal-primary-500
+        dark:bg-neobrutal-primary-600
+    }
+
+    [data-flux-navbar] [data-flux-navbar-items]{
+        @apply
+        bg-neobrutal-primary-500
+        dark:bg-neobrutal-primary-600
+        text-neobrutal-gray-800
+        hover:text-neobrutal-gray-950
+        hover:underline
+        underline-offset-4
+        decoration-2;
+    }
+
+    [data-flux-navbar] [data-current]:after{
+        @apply
+        bg-inherit
+    }
+
+    [data-flux-navbar] [data-flux-navbar-items] [data-content]{
+        @apply font-bold;
+    }
+
+    [data-flux-button]:not(:has([data-flux-icon]:not([data-flux-loading-indicator] *))) {
+        @apply
+        font-semibold
+        rounded-neobrutalist
+        shadow-neobrutalist
+        border-2
+        border-neobrutal-gray-950
+        text-neobrutal-gray-950
+        dark:text-neobrutal-gray-50
+        bg-neobrutal-primary-400
+        hover:bg-neobrutal-primary-500
+        dark:bg-neobrutal-primary-600
+        dark:hover:bg-neobrutal-primary-700
+        hover:translate-x-[4px]
+        hover:translate-y-[4px]
+        transition-all
+        hover:shadow-none
+    }
+
+    [data-flux-card] {
+        @apply
+        rounded-neobrutalist
+        border-2
+        border-neobrutal-gray-950
+        shadow-neobrutalist
+        bg-neobrutal-primary-200
+        dark:bg-neobrutal-primary-900
+    }
+
+    ui-label {
+        @apply
+        dark:text-neobrutal-gray-50
+    }
+
+    [data-flux-field] ui-label, input, textarea{
+        @apply
+        font-semibold;
+    }
+
+    [data-flux-field] input, textarea{
+        @apply
+        rounded-neobrutalist
+        shadow-none
+        border-2
+        border-neobrutal-gray-950
+        dark:text-neobrutal-gray-50
+        dark:placeholder-neobrutal-gray-400
+        dark:bg-neobrutal-gray-700
+    }
+}
+
 [data-flux-field]:not(ui-radio, ui-checkbox) {
     @apply grid gap-2;
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply  !-mb-1 !leading-tight;
 }
 
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+    @apply outline-hidden ring-2 ring-neobrutal-gray-950;
 }
 
 /* \[:where(&)\]:size-4 {
