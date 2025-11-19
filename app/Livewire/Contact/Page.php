@@ -25,9 +25,7 @@ class Page extends Component
     {
         $this->validate();
 
-        Mail::to(
-            User::first()->email
-        )->send(
+        Mail::to(config('mail.contact_email'))->send(
             new ContactMessage(
                 name: $this->name,
                 email: $this->email,
