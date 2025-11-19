@@ -15,10 +15,10 @@ Route::get('/', function () {
 Route::get('/contact', ContactPage::class)
     ->name('contact');
 
-Route::get('/posts/create', CreatePost::class)
-    ->name('posts.create');
-
 Route::middleware(['auth'])->group(function () {
+    Route::get('/posts/create', CreatePost::class)
+        ->name('posts.create');
+
     Route::get('/posts/{post}/edit', EditPost::class)
         ->name('posts.edit');
 
@@ -27,7 +27,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('posts', PostController::class)
-    ->only(['index', 'show']);
+    ->only(['index', 'show'])
+    ->middleware([
+        'show' => 'can:view,post',
+    ]);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

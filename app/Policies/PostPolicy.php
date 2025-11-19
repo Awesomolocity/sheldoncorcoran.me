@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class PostPolicy
 {
@@ -21,7 +21,12 @@ class PostPolicy
      */
     public function view(?User $user, Post $post): bool
     {
-        return $post->published;
+        if ($post->published) {
+            return true;
+        }
+
+        // If it's not published, only logged-in users may see it.
+        return $user !== null;
     }
 
     /**
