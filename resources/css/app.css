@@ -179,6 +179,15 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-neobrutal-gray-950;
 }
 
+[data-flux-toast-dialog]>div{
+    @apply rounded-neobrutalist
+    border-2
+    border-neobrutal-gray-950
+    shadow-neobrutalist
+    bg-neobrutal-primary-50
+    dark:bg-neobrutal-primary-900;
+}
+
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */

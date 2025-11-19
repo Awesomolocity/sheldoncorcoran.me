@@ -3,10 +3,10 @@
 namespace App\Livewire\Contact;
 
 use App\Mail\ContactMessage;
+use App\Models\User;
+use Flux\Flux;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Request;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Validate;
 use Livewire\Component;
 use RyanChandler\LaravelCloudflareTurnstile\Rules\Turnstile;
 
@@ -25,12 +25,21 @@ class Page extends Component
     {
         $this->validate();
 
-        Mail::to('sheldon@sheldoncorcoran.me')->send(
+        Mail::to(
+            User::first()->email
+        )->send(
             new ContactMessage(
                 name: $this->name,
                 email: $this->email,
                 message: $this->message,
             )
+        );
+
+        Flux::toast(
+            text: 'Your message has been sent!',
+            heading: 'Message Sent',
+            duration: 0,
+            variant: 'success'
         );
 
         $this->reset();

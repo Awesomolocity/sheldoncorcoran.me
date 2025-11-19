@@ -11,6 +11,9 @@
         <flux:footer>
             <x-personal-info />
         </flux:footer>
+        @persist('toast')
+            <flux:toast />
+        @endpersist
         @fluxScripts
     </body>
 </html>

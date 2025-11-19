@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -12,8 +12,14 @@ class PostController extends Controller
      */
     public function index()
     {
+        if (Auth::check()) {
+            $posts = Post::latest()->simplePaginate(5);
+        } else {
+            $posts = Post::where('published', 1)->latest()->simplePaginate(5);
+        }
+
         return view('posts.index.page', [
-            'posts' => Post::latest()->simplePaginate(3),
+            'posts' => $posts,
         ]);
     }
 
@@ -26,7 +32,6 @@ class PostController extends Controller
             'post' => $post,
         ]);
     }
-
 
     /**
      * Remove the specified resource from storage.
